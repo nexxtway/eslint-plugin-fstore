@@ -16,6 +16,7 @@ describe('export-function-as-default rule', () => {
             { code: `const foo = require('foo'); module.exports = foo({ name: 'bar' });` },
             { code: `module.exports = foo({ name: 'bar' });` },
             { code: `module.exports = composeMiddlewares(isAuth())(createStripeSetupIntent);` },
+            { code: `const app = express(); module.exports = app;`}
         ].map(attachDefaultConfig)),
         invalid: [].concat([
             { code: 'module.exports = 5;', errors: ['It must exports a function as default.'] },

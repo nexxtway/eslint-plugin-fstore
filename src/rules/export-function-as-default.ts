@@ -42,7 +42,7 @@ const rule: Rule.RuleModule = {
                                 const isVariableArrowFunction = variable?.references[0].writeExpr?.type === 'ArrowFunctionExpression';
                                 const isVariableFunctionExpression = variable?.references[0].writeExpr?.type === 'FunctionExpression';
                                 const isVariableFunctionDeclaration = variable?.references[0].from.set.get(variable.name)?.defs[0].type === 'FunctionName';
-                                const wasImported = get(variable, 'identifiers[0].parent.init.callee.name') === 'require';
+                                const wasImported = get(variable, 'identifiers[0].parent.init.callee.name') !== undefined;
                                 if (isVariableArrowFunction || isVariableFunctionExpression || isVariableFunctionDeclaration || wasImported) {
                                     foundExport = true;
                                     return;
