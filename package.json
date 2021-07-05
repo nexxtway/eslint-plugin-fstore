@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-fstore",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This plugin intends to support linting of fstore workspaces",
   "keywords": [
     "eslint",
@@ -10,7 +10,7 @@
   "author": "Maxx Greene",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -Rf lib && tsc",
     "test": "jest src"
   },
   "dependencies": {
