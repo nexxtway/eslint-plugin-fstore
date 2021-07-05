@@ -1,4 +1,5 @@
 import { Rule } from 'eslint';
+import get from 'lodash/get';
 
 const rule: Rule.RuleModule = {
     meta: {
@@ -41,10 +42,15 @@ const rule: Rule.RuleModule = {
                                 const isVariableArrowFunction = variable?.references[0].writeExpr?.type === 'ArrowFunctionExpression';
                                 const isVariableFunctionExpression = variable?.references[0].writeExpr?.type === 'FunctionExpression';
                                 const isVariableFunctionDeclaration = variable?.references[0].from.set.get(variable.name)?.defs[0].type === 'FunctionName';
-                                if (isVariableArrowFunction || isVariableFunctionExpression || isVariableFunctionDeclaration) {
+                                const wasImported = get(variable, 'identifiers[0].parent.init.callee.name') === 'require';
+                                if (isVariableArrowFunction || isVariableFunctionExpression || isVariableFunctionDeclaration || wasImported) {
                                     foundExport = true;
                                     return;
                                 }
+                            }
+                            if (right.type === 'CallExpression') {
+                                foundExport = true;
+                                return;
                             }
                             context.report({
                                 node: node.parent,

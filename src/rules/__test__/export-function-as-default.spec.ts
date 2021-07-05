@@ -12,11 +12,16 @@ describe('export-function-as-default rule', () => {
             { code: 'module.exports = () => {};',  },
             { code: 'const foo = () => {}; module.exports = foo;'},
             { code: 'function foo () {}; module.exports = foo;'},
+            { code: `const foo = require('foo'); module.exports = foo;` },
+            { code: `const foo = require('foo'); module.exports = foo({ name: 'bar' });` },
+            { code: `module.exports = foo({ name: 'bar' });` },
         ].map(attachDefaultConfig)),
         invalid: [].concat([
             { code: 'module.exports = 5;', errors: ['It must exports a function as default.'] },
             { code: `module.exports =  'foo';`, errors: ['It must exports a function as default.'] },
             { code: 'const foo = () => {};', errors: ['It must exports a function as default.'] },
+            { code: 'exports.foo = function foo() {};', errors: ['It must exports a function as default.'] },
+            { code: 'exports.foo = () => {};', errors: ['It must exports a function as default.'] },
         ].map(attachDefaultConfig)),
     })
 });
